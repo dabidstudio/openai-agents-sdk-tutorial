@@ -6,17 +6,16 @@
 - OpenAI의 "에이전트 개발을 위한 실용적인 가이드"에서 활용 https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf
 
 <details>
-<summary>1️⃣ 기본 에이전트 구현</summary>
+<summary>## 1 기본 에이전트 구현</summary>
 
 - [1_basic.py](./1_basic.py)  
   가장 단순한 에이전트 구조를 구현합니다.
 
 </details>
 
----
 
 <details>
-<summary>2️⃣ 대화형 에이전트</summary>
+<summary>## 2 대화형 에이전트</summary>
 
 - [2_1_chat.py](./2_1_chat.py)  
   기본적인 채팅 기능 구현
@@ -29,10 +28,9 @@
 
 </details>
 
----
 
 <details>
-<summary>3️⃣ 도구(Tool) 사용</summary>
+<summary>## 3 도구(Tool) 사용</summary>
 
 - [3_1_tool.py](./3_1_tool.py)  
   Built-in Tool을 사용하는 예제
@@ -54,7 +52,7 @@
 ---
 
 <details>
-<summary>4️⃣ 고급 기능</summary>
+<summary>## 4 고급 기능</summary>
 
 - [4_1_context.py](./4_1_context.py)  
   문맥(Context) 관리
@@ -73,20 +71,19 @@
 ---
 
 <details>
-<summary>5️⃣ 최종 에이전트 완성</summary>
+<summary>## 5 최종 에이전트 완성</summary>
 
 - [5_final_agent.py](./5_final_agent.py)  
   모든 기능을 통합한 최종 에이전트 구현
 
 </details>
 
----
 
 <details>
-<summary>6️⃣ 기타 팁</summary>
+<summary>## 6 기타 팁</summary>
 
 - [6_tips.ipynb](./6_tips.ipynb)  
   Tracing, 타 LLM 연동 등 고급 팁 정리
 
 </details>
-```
+
