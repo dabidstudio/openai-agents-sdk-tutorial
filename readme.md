@@ -11,7 +11,7 @@
 <details>
 <summary>1. 기본 에이전트 구현</summary>
 
-### 1_ 기본 에이전트  
+
 - **[1_basic.py](./1_basic.py)**: 가장 단순한 에이전트 구조 구현 예제
 
 </details>
