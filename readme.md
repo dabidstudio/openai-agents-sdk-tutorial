@@ -30,74 +30,68 @@
 <details>
 <summary>1. 기본 에이전트 구현</summary>
 
+<img width="827" height="433" alt="image" src="https://github.com/user-attachments/assets/b453d1d8-ff71-47d8-80c0-64baffc584d6" />
 
-- **[1_basic.py](./1_basic.py)**: 가장 단순한 에이전트 구조 구현 예제
+- [1_basic.py](./1_basic.py): 첫 에이전트 만들기
 
 </details>
 
 <details>
 <summary>2. 대화형 에이전트</summary>
+<img width="755" height="491" alt="image" src="https://github.com/user-attachments/assets/8b3fba86-e060-4b6a-950a-e519f6cc78a7" />
 
-### 2_1 채팅 기본  
-- **[2_1_chat.py](./2_1_chat.py)**: 기본적인 채팅 기능 구현
 
-### 2_2 스트리밍 채팅  
-- **[2_2_chat_stream.py](./2_2_chat_stream.py)**: 스트리밍 응답 기능 구현
-
-### 2_3 Chat UI  
-- **[2_3_chat_ui.py](./2_3_chat_ui.py)**: 간단한 챗 인터페이스 구성
+- [2_1_chat.py](./2_1_chat.py): 대화형 에이전트 구현
+- [2_2_chat_stream.py](./2_2_chat_stream.py): 스트림 기능 구현
+- [2_3_chat_ui.py](./2_3_chat_ui.py): 챗 UI 구현
 
 </details>
 
 <details>
 <summary>3. 도구(Tool) 사용</summary>
 
-### 3_1 내장 툴  
-- **[3_1_tool.py](./3_1_tool.py)**: Built‑in Tool 사용 예제
+<img width="867" height="543" alt="image" src="https://github.com/user-attachments/assets/90c14d6a-d050-44e3-aae9-4603ca39f4e9" />
 
-### 3_2 웹 검색  
-- **[3_2_tool_websearch.py](./3_2_tool_websearch.py)**: 웹 검색 툴 통합
-
-### 3_3 MCP 연동  
-- **[3_3_tool_mcp.py](./3_3_tool_mcp.py)**: MCP 기반 툴 사용
-
-### 3_4 Agent-as-Tool  
-- **[3_4_tool_agentastool.py](./3_4_tool_agentastool.py)**: 에이전트를 도구처럼 활용
-
-### 3_5 Tool‑기반 UI  
-- **[3_5_tool_ui.py](./3_5_tool_ui.py)**: Tool 중심 UI 예제
+- [3_1_tool.py](./3_1_tool.py): 함수로 도구(tool) 만들기
+- [3_2_tool_websearch.py](./3_2_tool_websearch.py): 내장된 도구 활용
+- [3_3_tool_mcp.py](./3_3_tool_mcp.py): MCP 도구 활용
+- [3_4_tool_agentastool.py](./3_4_tool_agentastool.py): 에이전트를 도구처럼 활용\
+- [3_5_tool_ui.py](./3_5_tool_ui.py): UI에서 도구사용 반영하기
 
 </details>
 
 <details>
 <summary>4. 고급 기능</summary>
 
-### 4_1 문맥 관리  
-- **[4_1_context.py](./4_1_context.py)**: Context 관리
 
-### 4_2 구조화된 출력  
-- **[4_2_structured_output.py](./4_2_structured_output.py)**: Pydantic을 활용한 구조화된 출력
+- [4_1_context.py](./4_1_context.py): Context 관리
 
-### 4_3 Guardrail  
-- **[4_3_guardrail.py](./4_3_guardrail.py)**: Guardrail 적용 예시
+<img width="819" height="531" alt="image" src="https://github.com/user-attachments/assets/870c287e-33d5-4d71-924e-0c35122eb59b" />
 
-### 4_4 핸드오프 트리아지  
-- **[4_4_handoff_triage.py](./4_4_handoff_triage.py)**: Handoff 시나리오 구현
+
+- [4_2_structured_output.py](./4_2_structured_output.py): 구조화된 출력
+- [4_3_guardrail.py](./4_3_guardrail.py): Guardrail 적용
+<img width="1004" height="551" alt="image" src="https://github.com/user-attachments/assets/6e3c8669-f627-45b3-9a50-78a4a610ff9d" />
+
+ 
+- [4_4_handoff_triage.py](./4_4_handoff_triage.py): Handoff 활용
+<img width="943" height="488" alt="image" src="https://github.com/user-attachments/assets/d2b55758-ef0c-4e3f-91ec-3f24a2af2cde" />
 
 </details>
 
 <details>
 <summary>5. 최종 에이전트 완성</summary>
 
-### 5_ 최종 통합  
-- **[5_final_agent.py](./5_final_agent.py)**: 모든 기능을 통합한 완전한 에이전트 구현
+
+- [5_final_agent.py](./5_final_agent.py): 최종 여행일정 수립 에이전트
+<img width="1028" height="602" alt="image" src="https://github.com/user-attachments/assets/31ee0b42-376c-4fb9-8cfc-6cdace6c59da" />
+
 
 </details>
 
 <details>
 <summary>6. 기타 팁</summary>
 
-### 6_ 노트북 팁  
-- **[6_tips.ipynb](./6_tips.ipynb)**: tracing, 타 LLM 연동 등 고급 팁 정리
+- [6_tips.ipynb](./6_tips.ipynb): tracing 및 다른 LLM 연동법
 
 </details>
