@@ -3,8 +3,7 @@
 ## OpenAI Agents SDK 소개
 - OpenAI가 개발한 에이전트 개발 프레임워크로, Python 기반의 멀티 에이전트 워크플로우를 쉽게 구현할 수 있습니다.
 - “에이전트를 구축하기 위한 실용적인 가이드”에서 활용되며, 웹 검색, 파일 검색, 컴퓨터 제어 등 다양한 도구와 결합해 사용됩니다 [\[OpenAI Agents SDK 소개 가이드\]](https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf).
-- 경량 SDK이지만 handoffs, guardrails, tracing, structured output 등의 고급 기능도 포함되어 있어 개발 생산성을 대폭 높여줍니다 :contentReference[oaicite:1]{index=1}.
-
+- 경량 SDK이지만 handoffs, guardrails, tracing, structured output 등의 고급 기능도 포함되어 있어 개발 생산성을 대폭 높여줍니다
 ---
 
 ## 📌 Details
