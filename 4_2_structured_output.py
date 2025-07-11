@@ -3,7 +3,7 @@ from agents import Agent, Runner
 import json
 from pydantic import BaseModel
 
-# 1 프롬프트를 활용하기
+
 # async def main():
 #    agent = Agent(
 #        name="여행 에이전트",
@@ -29,9 +29,7 @@ from pydantic import BaseModel
 #       print(f"{travel['name']} - {travel['score']}점")
 
 
-
-# 2 sturctured output 사용하기
-class Travel(BaseModel):
+class Place(BaseModel):
    name: str
    score: int
 
@@ -40,7 +38,7 @@ async def main():
        name="여행 에이전트",
        instructions="당신은 훌륭한 여행 에이전트입니다.",
        model="gpt-4o-mini",
-       output_type=list[Travel]
+       output_type=list[Place]
    )
    prompt = """
    강원도 여행지 추천해줘
@@ -51,7 +49,6 @@ async def main():
    print(travel_list)
    for travel in travel_list:
       print(f"{travel.name} - {travel.score}점")
-
 
 if __name__ == "__main__":
    asyncio.run(main())  # Run the async function

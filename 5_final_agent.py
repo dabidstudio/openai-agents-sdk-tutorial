@@ -1,11 +1,10 @@
-## 1회 실행 시 약 입력토큰 약 50만, gpt-4.1 약 1불
+## 1회 실행 시 약 입력토큰 50만 / 출력토큰 0.1만, gpt-4.1 약 1불
 
-
+import re
 import sys
 import asyncio
 import streamlit as st
 import json
-from typing import List, Dict, Optional
 from dotenv import load_dotenv
 from pydantic import BaseModel
 from openai.types.responses import (
@@ -15,30 +14,34 @@ from openai.types.responses import (
 )
 from agents import (
     Agent, Runner, function_tool,
-    input_guardrail, handoff,
+    input_guardrail,
     GuardrailFunctionOutput, InputGuardrailTripwireTriggered,
     RunContextWrapper, TResponseInputItem
 )
 from agents.mcp import MCPServerStdio
-import shutil
 from datetime import datetime, timezone, timedelta
 
 load_dotenv()
 
-# Windows 호환성 설정
-if sys.platform == "win32":
-    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 
 
-
-class TravelRelevanceOutput(BaseModel):
-    travel_unrelated: bool
-    explanation: str
 
 
 # ─────────────────────────────
-# 🛠 예시 도구
+# 스트림릿 관련
+# ─────────────────────────────
+
+# Windows 스트림릿 호환성 설정
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+
+def sanitize_markdown(text):
+    # 숫자 범위에 사용된 물결표를 이스케이프 처리 (예: 6~10 -> 6\~10)
+    return re.sub(r'(\d)~(\d)', r'\1\~\2', text)
+
+# ─────────────────────────────
+# 도구 관련
 # ─────────────────────────────
 @function_tool()
 def get_weather(city: str) -> str:
@@ -76,12 +79,21 @@ def get_weather(city: str) -> str:
 
 
 # ─────────────────────────────
-# 🔒 여행 관련 Guardrail
+# 가드레일 관련
 # ─────────────────────────────
+class TravelRelevanceOutput(BaseModel):
+    is_travel: bool
+    explanation: str
+
+# guardrail용 agent: 입력이 여행 관련인지 판단
 guardrail_agent = Agent(
-    name="여행 관련 여부 판단기",
-    instructions="입력이 여행과 관련되었는지 판단하고, 관련 없으면 travel_unrelated=True 반환하세요.",
-    output_type=TravelRelevanceOutput
+    name="가드레일 에이전트",
+    instructions=(
+        "사용자의 입력이 여행 계획이나 여행 질문과 관련된 것인지 판단하세요. "
+        "그래서 여행 관련 질문(예: 장소 추천, 일정 계획, 날씨 문의 등)이면  'is_travel=True', "
+        "그 외 여행과 관련이 없으면 'is_travel=False'로 출력하세요."
+    ),
+    output_type=TravelRelevanceOutput,
 )
 
 @input_guardrail
@@ -90,15 +102,15 @@ async def travel_input_guardrail(
     agent: Agent,
     input: str | list[TResponseInputItem]
 ) -> GuardrailFunctionOutput:
-    result = await Runner.run(guardrail_agent, input, context=ctx.context)
+    result = await Runner.run(guardrail_agent, input)
+
     return GuardrailFunctionOutput(
-        tripwire_triggered=result.final_output.travel_unrelated,
-        output_info=result.final_output
+        output_info=result.final_output,
+        tripwire_triggered=not result.final_output.is_travel,
     )
 
-
 # ─────────────────────────────
-# 🔌 MCP 서버 및 에이전트 생성
+# MCP 서버 및 에이전트 생성
 # ─────────────────────────────
 def create_agents(mcp_server):
     """에이전트들을 생성하는 함수"""
@@ -106,9 +118,12 @@ def create_agents(mcp_server):
     # KST 타임존 생성
     kst = timezone(timedelta(hours=9))
     now_kst = datetime.now(kst)
-    today_kst = now_kst.strftime("%Y%m%d %H%M KST")
-    travel_planner_agent = Agent(
-        name="Travel Planner",
+    # 한국어 날짜 및 시간 포맷
+    today_kst = now_kst.strftime("%Y년 %m월 %d일 %H시 %M분 KST")
+
+    print(today_kst)
+    travel_agent = Agent(
+        name="tavel_agent",
         instructions=f"""
         현재 시각은 {today_kst} 입니다.
         명확한 여행 정보가 주어지면 여행 목적지, 활동, 예산 등을 포함한 상세한 계획을 한국어로 작성하세요.
@@ -127,27 +142,32 @@ def create_agents(mcp_server):
     )
 
     clarifier_agent = Agent(
-        name="Clarifier",
+        name="clarifier_agent",
         instructions="""
-        입력에 필요한 정보가 부족하면 2~3개의 후속 질문을 하고,
-        충분히 명확하면 instruction_builder로 넘기세요.
-        모든 질문은 한국어로 하세요.
+        사용자의 여행 문의가 너무 모호하거나 중요한 정보가 부족한 경우, 
+        2-3개의 후속 질문을 해주세요 하세요.
+        문의가 이미 명확한 경우 `transfer_to_travel_agent` 호출
+        예시 질문:
+        - 어떤 여행지를 생각하고 계신가요?
+        - 언제 여행하실 계획인가요?
+        - 예산은 어느 정도인가요?
+        - 자연, 모험, 문화, 휴식 중 어떤 것을 찾으시나요?
+
+        모든 질문은 한국어로 작성하세요.
         """,
-        handoffs=[handoff(travel_planner_agent)]
+        handoffs=[travel_agent]
     )
 
     triage_agent = Agent(
-        name="Triage Agent",
+        name="triage_agent",
         instructions="""
         사용자의 문의가 여행 계획에 사용될 준비가 되었는지 판단하세요.
         
-        - 핵심 정보가 부족한 경우 `transfer_to_clarifier` 호출
-        - 요청이 명확하고 잘 명시된 경우 `transfer_to_instruction_builder` 호출
+        - 핵심 정보가 부족한 경우 `transfer_to_clarifier_agent` 호출
+        - 요청이 명확하고 잘 명시된 경우 `transfer_to_travel_agent` 호출
         
-        하나의 함수 호출만 반환하세요.
-        모든 응답은 한국어로 작성하세요.
         """,
-        handoffs=[handoff(clarifier_agent), handoff(travel_planner_agent)],
+        handoffs=[clarifier_agent, travel_agent],
         input_guardrails=[travel_input_guardrail]
     )
 
@@ -155,7 +175,7 @@ def create_agents(mcp_server):
 
 
 # ─────────────────────────────
-# 📤 메시지 처리 함수
+# 스트림릿 메시지 처리 함수
 # ─────────────────────────────
 async def process_user_message_with_mcp():
     """MCP 서버와 함께 사용자 메시지를 처리하는 함수"""
@@ -181,7 +201,7 @@ async def process_user_message_with_mcp():
                     response_text += event.data.delta or ""
                     with placeholder.container():
                         with st.chat_message("assistant"):
-                            st.write(response_text)
+                            st.write(sanitize_markdown(response_text))
 
                 if (
                     isinstance(event.data, ResponseOutputItemDoneEvent)
@@ -199,9 +219,6 @@ async def process_user_message_with_mcp():
         return response_text
 
 
-# ─────────────────────────────
-# 🖥 Streamlit 앱
-# ─────────────────────────────
 def main():
     st.set_page_config(page_title="✈️ AI 여행 에이전트", page_icon="🌍")
 
@@ -211,11 +228,6 @@ def main():
     st.title("✈️ AI 여행 에이전트")
     st.caption("당신의 여행 계획을 도와드릴게요!")
 
-    # npx 설치 확인
-    if not shutil.which("npx"):
-        st.error("❌ npx가 설치되어 있지 않습니다. 다음 명령어로 설치해 주세요:")
-        st.code("npm install -g npx", language="bash")
-        return
 
     for m in st.session_state.longterm_messages:
         with st.chat_message(m["role"]):
