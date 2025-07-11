@@ -1,8 +1,7 @@
 import asyncio
 from agents import Agent, Runner
-from typing import List, Dict
 
-async def chat_with_agent():
+async def main():
     messages = []
     agent = Agent(
         name="여행 에이전트",
@@ -14,14 +13,12 @@ async def chat_with_agent():
         if user_input == "exit":
             print("Bye")
             break
-        # 사용자 입력을 메시지 기록에 추가
+        
         messages.append({"role": "user", "content": user_input})
-        # 에이전트에게 메시지 기록을 전달하여 응답 받기
         response = await Runner.run(agent, input=messages)
-        # 에이전트의 응답을 메시지 기록에 추가
         messages.append({"role": "assistant", "content": response.final_output})
         
         print(f"\n여행 에이전트: {response.final_output}")
-
+        
 if __name__ == "__main__":
-    asyncio.run(chat_with_agent())
+    asyncio.run(main())
