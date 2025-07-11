@@ -1,12 +1,5 @@
 import asyncio
-from agents import Agent, Runner
-import json
-from pydantic import BaseModel
-
-
-
-
-from agents import Agent, function_tool
+from agents import Agent, Runner, function_tool, WebSearchTool
 
 @function_tool
 def get_weather(city: str) -> str:
@@ -26,23 +19,18 @@ def get_weather(city: str) -> str:
     }
     return weather_dict.get(city, "비")
 
-
-
 async def main():
    agent = Agent(
        name="여행 에이전트",
-       instructions="당신은 훌륭한 여행 에이전트입니다.",
        model="gpt-4o-mini",
-       tools=[get_weather]
+       instructions="당신은 훌륭한 여행 에이전트입니다. 여행일정을 짤 때 웹검색도 꼭 해주고 출처도 같이 표시해줘",
+       tools=[WebSearchTool()]
+       
    )
-   prompt = """
-   강원도 여행지 추천해줘 각 여행지마다 날씨도 알려줘
-   """
-
+   prompt = "평창 여행일정을 짜주고 날씨도 고려해줘"
    result = await Runner.run(agent, prompt)
-   result = result.final_output
-   print(result)
-
-
+   print(result.final_output)
+   
+   
 if __name__ == "__main__":
-   asyncio.run(main())  # Run the async function
+   asyncio.run(main())  

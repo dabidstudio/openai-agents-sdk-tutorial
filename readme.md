@@ -53,11 +53,9 @@
 <details>
 <summary>3. 도구(Tool) 사용</summary>
 
-- [3_1_tool.py](./3_1_tool.py): 함수로 도구(tool) 만들기  
-- [3_2_tool_websearch.py](./3_2_tool_websearch.py): 내장된 도구 활용  
-- [3_3_tool_mcp.py](./3_3_tool_mcp.py): MCP 도구 활용  
-- [3_4_tool_agentastool.py](./3_4_tool_agentastool.py): 에이전트를 도구처럼 활용  
-- [3_5_tool_ui.py](./3_5_tool_ui.py): UI에서 도구사용 반영하기  
+- [3_1_tool.py](./3_1_tool.py): 함수 및 내장된 도구(tool) 활용
+- [3_2_tool_mcp.py](./3_2_tool_mcp.py): MCP 도구 활용  
+- [3_3_tool_agents.py](./3_3_tool_agents.py): 에이전트를 도구처럼 활용  
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/90c14d6a-d050-44e3-aae9-4603ca39f4e9" width="500" />
@@ -86,7 +84,7 @@
     </div>
   </details>
 
-- [4_4_handoff_triage.py](./4_4_handoff_triage.py): Handoff 활용  
+- [4_4_handoff.py](./4_4_handoff.py): Handoff 활용  
   <details>
     <summary>이미지 보기</summary>
     <div align="center">
@@ -110,6 +108,6 @@
 <details>
 <summary>6. 기타 팁</summary>
 
-- [6_tips.ipynb](./6_tips.ipynb): tracing 및 다른 LLM 연동법
+- [6_gemini.py](./6_gemini.py): gemini llm 연동
 
 </details>
