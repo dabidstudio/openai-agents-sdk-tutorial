@@ -88,7 +88,7 @@
   <details>
     <summary>이미지 보기</summary>
     <div align="center">
-      <img src="https://github.com/user-attachments/assets/d2b55758-ef0c-4e3f-91ec-3f24a2af2cde" width="500" />
+      <img src="https://github.com/user-attachments/assets/dfb2d8b9-7bbf-4735-b8d2-219c43956ac5" width="500" />
     </div>
   </details>
 
@@ -100,14 +100,15 @@
 - [5_final_agent.py](./5_final_agent.py): 최종 여행일정 수립 에이전트
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/31ee0b42-376c-4fb9-8cfc-6cdace6c59da" width="500" />
+  <img src="https://github.com/user-attachments/assets/0d758945-9f05-4a75-9ac3-7cdf66c71a8b" width="500" />
 </div>
+
 
 </details>
 
 <details>
 <summary>6. 기타 팁</summary>
 
-- [6_gemini.py](./6_gemini.py): gemini llm 연동
-
+- [6_1_gemini.py](./6_1_gemini.py): gemini llm 연동
+- [6_2_tracing.py](./6_2_tracing.py): tracing 소개
 </details>
