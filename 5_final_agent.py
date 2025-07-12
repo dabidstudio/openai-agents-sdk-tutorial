@@ -191,7 +191,7 @@ async def process_user_message_with_mcp():
         triage_agent = create_agents(mcp_server)
         
         # 메시지 처리
-        result = Runner.run_streamed(triage_agent, input=st.session_state.longterm_messages, max_turns=20)
+        result = Runner.run_streamed(triage_agent, input=st.session_state.messages, max_turns=20)
         response_text = ""
         placeholder = st.empty()
 
@@ -222,20 +222,20 @@ async def process_user_message_with_mcp():
 def main():
     st.set_page_config(page_title="✈️ AI 여행 에이전트", page_icon="🌍")
 
-    if "longterm_messages" not in st.session_state:
-        st.session_state.longterm_messages = []
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
     st.title("✈️ AI 여행 에이전트")
     st.caption("당신의 여행 계획을 도와드릴게요!")
 
 
-    for m in st.session_state.longterm_messages:
+    for m in st.session_state.messages:
         with st.chat_message(m["role"]):
             st.markdown(m["content"])
 
     user_input = st.chat_input("어디로 여행 가고 싶으신가요?")
     if user_input:
-        st.session_state.longterm_messages.append({
+        st.session_state.messages.append({
             "role": "user",
             "content": user_input
         })
@@ -246,7 +246,7 @@ def main():
             # 메시지 처리
             response_text = asyncio.run(process_user_message_with_mcp())
             if response_text:
-                st.session_state.longterm_messages.append({
+                st.session_state.messages.append({
                     "role": "assistant",
                     "content": response_text
                 })
