@@ -1,7 +1,7 @@
 # OpenAI Agents SDK 뽀개기
 
 ## OpenAI Agents SDK 소개
-- OpenAI가 개발한 [[에이전트 개발 프레임워크]](https://openai.github.io/openai-agents-python), 파이썬으로 복잡한 에이전트 시스템 구현 가능
+- OpenAI가 개발한 [에이전트 개발 프레임워크](https://openai.github.io/openai-agents-python), 파이썬으로 복잡한 에이전트 시스템 구현 가능
 - OpenAI에서 발행한  [[실용적인 에이전트개발 가이드]](https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf)에서 활용됨
 - handoffs, guardrails, tracing, structured output 등의 다양한 기능을 쉽게 구현 가능
 
