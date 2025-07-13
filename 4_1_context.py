@@ -2,7 +2,8 @@ import asyncio
 from agents import Agent, Runner,RunContextWrapper
 from agents import Agent, function_tool
 from pydantic import BaseModel
-
+from dotenv import load_dotenv
+load_dotenv()
 
 class UserContext(BaseModel):
     user_id: str
@@ -50,6 +51,11 @@ def get_weather(city: str) -> str:
     }
     return weather_dict.get(city, "비, 15°C")
 
+def dynamic_instructions(
+    context: RunContextWrapper[UserContext], agent: Agent[UserContext]
+) -> str:
+    return f"사용자의 이름은 {context.context.name}.당신은 훌륭한 여행 에이전트입니다. 사용자와 대화하면서 여행 계획을 도와주세요.답변을 할 때 사용자의 이름을 구하고 이름을 불러서 활용해주세요"
+
 
 async def main():
     context = UserContext(user_id="123", name="dabid", subscription_tier="free")
@@ -57,7 +63,8 @@ async def main():
     messages = []
     agent = Agent(
         name="여행 에이전트",
-        instructions="당신은 훌륭한 여행 에이전트입니다. 사용자와 대화하면서 여행 계획을 도와주세요.답변을 할 때 사용자의 이름을 구하고 이름을 불러서 활용해주세요",
+        instructions=dynamic_instructions,
+        # instructions="당신은 훌륭한 여행 에이전트입니다. 사용자와 대화하면서 여행 계획을 도와주세요.답변을 할 때 사용자의 이름을 구하고 이름을 불러서 활용해주세요",
         tools=[get_weather,fetch_user_name],
     )
     while True:
