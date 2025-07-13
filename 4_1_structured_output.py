@@ -2,7 +2,8 @@ import asyncio
 from agents import Agent, Runner
 import json
 from pydantic import BaseModel
-
+from dotenv import load_dotenv
+load_dotenv()
 
 # async def main():
 #    agent = Agent(
@@ -51,4 +52,4 @@ async def main():
       print(f"{travel.name} - {travel.score}점")
 
 if __name__ == "__main__":
-   asyncio.run(main())  # Run the async function
+   asyncio.run(main()) 
