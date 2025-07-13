@@ -1,5 +1,8 @@
 import asyncio
 from agents import Agent, Runner, function_tool
+from dotenv import load_dotenv
+load_dotenv()
+
 @function_tool
 def get_weather(city: str) -> str:
     """도시의 날씨를 반환하는 함수입니다.
