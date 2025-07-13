@@ -65,8 +65,9 @@
 
 <details>
 <summary>4. 고급 기능</summary>
+- [4_1_structured_output.py](./4_1_structured_output.py): 구조화된 출력
 
-- [4_1_context.py](./4_1_context.py): Context 관리  
+- [4_2_context.py](./4_2_context.py): Context 관리  
   <details>
     <summary>이미지 보기</summary>
     <div align="center">
@@ -74,7 +75,6 @@
     </div>
   </details>
 
-- [4_2_structured_output.py](./4_2_structured_output.py): 구조화된 출력
 
 - [4_3_guardrail.py](./4_3_guardrail.py): Guardrail 적용  
   <details>
