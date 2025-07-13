@@ -1,5 +1,6 @@
 from agents import Agent, Runner, trace
-
+from dotenv import load_dotenv
+load_dotenv()
 # 두 개의 에이전트 생성
 joke_agent = Agent(
     name="유머 에이전트",
