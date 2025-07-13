@@ -1,6 +1,9 @@
 import asyncio
 from agents import Agent, Runner
 from openai.types.responses import ResponseTextDeltaEvent
+from dotenv import load_dotenv
+load_dotenv()
+
 
 
 async def main():
