@@ -10,7 +10,8 @@ from agents import (
     TResponseInputItem,
 )
 from pydantic import BaseModel
-
+from dotenv import load_dotenv
+load_dotenv()
 
 # guardrail의 출력 타입 정의
 class TravelRelevanceOutput(BaseModel):
