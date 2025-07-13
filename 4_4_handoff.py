@@ -1,7 +1,8 @@
 from agents import Agent, Runner
 import asyncio
 from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
-
+from dotenv import load_dotenv
+load_dotenv()
 
 # ──────────────────────────────────────
 # 여행일정 에이전트
