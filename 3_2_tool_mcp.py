@@ -1,7 +1,8 @@
 import asyncio
 from agents import Agent, Runner, function_tool, WebSearchTool
 from agents.mcp import MCPServerStdio
-
+from dotenv import load_dotenv
+load_dotenv()
 
 @function_tool
 def get_weather(city: str) -> str:
